@@ -1,5 +1,6 @@
 <html>
   <head>
+    <title>구구단</title>
     <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
@@ -7,29 +8,55 @@
   <body>
     <div id="root"></div>
     <script type="text/babel">
-      const e = React.createElement;
-
-      class LikeButton extends React.Component {
+      class GuGuDan extends React.Component {
         constructor(props) {
-          super(props);
+          super(props)
           this.state = {
-            liked: false
-          };
+            first: Math.ceil(Math.random() * 9),
+            second: Math.ceil(Math.random() * 9),
+            value: '',
+            result: ''
+          }
         }
 
+        onSubmit = (e) => {
+          const {first, second, value, result} = this.state
+          e.preventDefault();
+          if(parseInt(value) === first * second) {
+            this.setState({
+              result: '정답',
+              first: Math.ceil(Math.random() * 9),
+              second: Math.ceil(Math.random() * 9),
+              value: ''
+            });
+          } else {
+            this.setState({
+              result: "땡",
+              value: ''
+            });
+          }
+        }
+
+        onChange = (e) => this.setState({value: e.target.value});
+
         render() {
-          return <button type="submit" onClick={() => { this.setState({liked: true}) }}>
-          {this.state.liked ? 'Liked' : 'Like'}
-          </button>;
-          // JSX ( JS + XML )
+          const {first, second, value, result} = this.state
+          return (
+            <div>
+              <div>{first}곱하기 {second}는?</div>
+              <form onSubmit={this.onSubmit}>
+                <input type="number" value={value} onChange={this.onChange}/>
+                <button>입력!</button>
+              </form>
+              <div>{result}</div>
+            </div>
+          );
         }
       }
     </script>
     <script type="text/babel">
       ReactDOM.render(<div>
-        <LikeButton />
-        <LikeButton />
-        <LikeButton />
+        <GuGuDan />
         </div>, document.querySelector('#root')); //LikeButton 클래스를 id가 root인 div에 넣겠다 
     </script>
   </body>
