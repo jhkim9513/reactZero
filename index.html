@@ -9,15 +9,13 @@
     <div id="root"></div>
     <script type="text/babel">
       class GuGuDan extends React.Component {
-        constructor(props) {
-          super(props)
-          this.state = {
+        state = {
             first: Math.ceil(Math.random() * 9),
             second: Math.ceil(Math.random() * 9),
             value: '',
             result: ''
           }
-        }
+        
 
         onSubmit = (e) => {
           const {first, second, value, result} = this.state
@@ -42,14 +40,14 @@
         render() {
           const {first, second, value, result} = this.state
           return (
-            <div>
+            <React.Fragment>
               <div>{first}곱하기 {second}는?</div>
               <form onSubmit={this.onSubmit}>
                 <input type="number" value={value} onChange={this.onChange}/>
                 <button>입력!</button>
               </form>
               <div>{result}</div>
-            </div>
+            </React.Fragment>
           );
         }
       }
